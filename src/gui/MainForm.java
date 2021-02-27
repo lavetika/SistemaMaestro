@@ -5,16 +5,26 @@
  */
 package gui;
 
+import com.google.gson.Gson;
+import conexion.Cliente;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author dianacastro
  */
-public class MainForm extends javax.swing.JFrame {
-
+public class MainForm extends javax.swing.JFrame implements GUIObserver {
+        Gson datosJson;
+        private final Cliente clienteServer;
     /**
      * Creates new form MainForm
      */
     public MainForm() {
+        datosJson= new Gson();
+        this.setLocationRelativeTo(null);
+        this.setTitle("Sistema Maestro");
+
+        this.clienteServer = new Cliente(this);
         initComponents();
     }
 
@@ -80,8 +90,12 @@ public class MainForm extends javax.swing.JFrame {
 
         btnEnviar.setBackground(new java.awt.Color(255, 204, 0));
         btnEnviar.setFont(new java.awt.Font("Roboto", 1, 14)); // NOI18N
-        btnEnviar.setForeground(new java.awt.Color(0, 0, 0));
         btnEnviar.setText("Enviar");
+        btnEnviar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnEnviar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, -1, -1));
 
         lblEncabezado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/FED148.jpeg"))); // NOI18N
@@ -96,6 +110,18 @@ public class MainForm extends javax.swing.JFrame {
     private void txtAlumnoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAlumnoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtAlumnoActionPerformed
+
+    private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
+       //String datosString=txtMaestro.getText()+txtMateria.getText()+txtAlumno.getText()+txtCalificacion.getText();
+       String json = "{ \"maestro\": \""+txtMaestro.getText()+"\","+
+               "\"materia\": \""+txtMateria.getText()+"\","+
+               "\"alumno\": \""+txtAlumno.getText()+"\","
+               + " \"calificacion\": \""+txtCalificacion.getText()+"\" }";
+       this.btnEnviar.setEnabled(false);
+       //this.datosJson.toJson((Object)datosString);
+       //aquí se le manda a enviar
+       this.clienteServer.enviar(json);
+    }//GEN-LAST:event_btnEnviarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -146,4 +172,10 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JTextField txtMaestro;
     private javax.swing.JTextField txtMateria;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void update(String contenido) {
+        this.btnEnviar.setEnabled(true);
+        JOptionPane.showMessageDialog(this,"Enviado");
+    }
 }
