@@ -5,16 +5,15 @@
  */
 package conexion;
 
-import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import org.json.JSONObject;
 
 /**
  *
  * @author Diana Jiménez
  */
 public interface Framer{
-    public void frameMsgJson(JsonObject message, OutputStream out) throws IOException;
-    public byte[] nextMsgJson(InputStream in) throws IOException;
+    public void frameMsgJson(byte[] message, OutputStream out) throws IOException;
 }
