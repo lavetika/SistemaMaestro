@@ -13,7 +13,9 @@ import javax.swing.JOptionPane;
  * @author dianacastro
  */
 public class MainForm extends javax.swing.JFrame implements GUIObserver {
-        private final Cliente clienteServer;
+
+    private final Cliente clienteServer;
+
     /**
      * Creates new form MainForm
      */
@@ -22,7 +24,7 @@ public class MainForm extends javax.swing.JFrame implements GUIObserver {
         this.setTitle("Sistema Maestro");
 
         this.clienteServer = new Cliente(this);
-        initComponents();
+        initComponents();        
     }
 
     /**
@@ -38,26 +40,37 @@ public class MainForm extends javax.swing.JFrame implements GUIObserver {
         txtMaestro = new javax.swing.JTextField();
         txtMateria = new javax.swing.JTextField();
         txtAlumno = new javax.swing.JTextField();
-        txtCalificacion = new javax.swing.JTextField();
         lblMaestro = new javax.swing.JLabel();
         lblMateria = new javax.swing.JLabel();
         lblAlumno = new javax.swing.JLabel();
         lblCalificacion = new javax.swing.JLabel();
         btnEnviar = new javax.swing.JButton();
         lblEncabezado = new javax.swing.JLabel();
+        cmbCalificacion = new javax.swing.JComboBox<>();
+        lblError = new javax.swing.JLabel();
         lblFondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setMaximumSize(new java.awt.Dimension(425, 370));
         setMinimumSize(new java.awt.Dimension(425, 370));
-        setPreferredSize(new java.awt.Dimension(425, 370));
         setSize(new java.awt.Dimension(425, 370));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Roboto", 1, 24)); // NOI18N
         jLabel1.setText("Sistema Maestro");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, -1, -1));
+
+        txtMaestro.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtMaestroKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtMaestro, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, 140, -1));
+
+        txtMateria.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtMateriaKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 140, 140, -1));
 
         txtAlumno.addActionListener(new java.awt.event.ActionListener() {
@@ -65,21 +78,25 @@ public class MainForm extends javax.swing.JFrame implements GUIObserver {
                 txtAlumnoActionPerformed(evt);
             }
         });
+        txtAlumno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtAlumnoKeyTyped(evt);
+            }
+        });
         getContentPane().add(txtAlumno, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 190, 140, -1));
-        getContentPane().add(txtCalificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 240, 140, -1));
 
         lblMaestro.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        lblMaestro.setText("Nombre");
+        lblMaestro.setText("ID Maestro");
         lblMaestro.setToolTipText("");
-        getContentPane().add(lblMaestro, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 90, -1, -1));
+        getContentPane().add(lblMaestro, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, -1, -1));
 
         lblMateria.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        lblMateria.setText("Materia");
-        getContentPane().add(lblMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 140, -1, -1));
+        lblMateria.setText("ID Materia");
+        getContentPane().add(lblMateria, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 140, -1, -1));
 
         lblAlumno.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
-        lblAlumno.setText("Alumno");
-        getContentPane().add(lblAlumno, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 190, -1, 20));
+        lblAlumno.setText("ID Alumno");
+        getContentPane().add(lblAlumno, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 190, -1, 20));
 
         lblCalificacion.setFont(new java.awt.Font("Roboto", 0, 14)); // NOI18N
         lblCalificacion.setText("Calificación");
@@ -93,10 +110,16 @@ public class MainForm extends javax.swing.JFrame implements GUIObserver {
                 btnEnviarActionPerformed(evt);
             }
         });
-        getContentPane().add(btnEnviar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 290, -1, -1));
+        getContentPane().add(btnEnviar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 310, -1, -1));
 
         lblEncabezado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/FED148.jpeg"))); // NOI18N
         getContentPane().add(lblEncabezado, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 430, 60));
+
+        cmbCalificacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" }));
+        getContentPane().add(cmbCalificacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 240, 140, -1));
+
+        lblError.setForeground(new java.awt.Color(204, 0, 51));
+        getContentPane().add(lblError, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 280, 230, 20));
 
         lblFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/blanco.jpg"))); // NOI18N
         getContentPane().add(lblFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 480, 380));
@@ -109,27 +132,65 @@ public class MainForm extends javax.swing.JFrame implements GUIObserver {
     }//GEN-LAST:event_txtAlumnoActionPerformed
 
     private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
-       //String datosString=txtMaestro.getText()+txtMateria.getText()+txtAlumno.getText()+txtCalificacion.getText();
-       String json = "{ \"maestro\": \""+txtMaestro.getText()+"\","+
-               "\"materia\": \""+txtMateria.getText()+"\","+
-               "\"alumno\": \""+txtAlumno.getText()+"\","
-               + " \"calificacion\": \""+txtCalificacion.getText()+"\" }";
-       //this.datosJson.toJson((Object)datosString);
-       //aquí se le manda a enviar
-       this.clienteServer.enviar(json);
+        if (validar()) {
+            String json = "{ \"maestro\": \"" + txtMaestro.getText() + "\","
+                    + "\"materia\": \"" + txtMateria.getText() + "\","
+                    + "\"alumno\": \"" + txtAlumno.getText() + "\","
+                    + " \"calificacion\": \"" + cmbCalificacion.getSelectedItem().toString() + "\" }";
+
+            this.clienteServer.enviar(json);
+        }else{
+            lblError.setText("Datos incorrectos");
+        }
     }//GEN-LAST:event_btnEnviarActionPerformed
+
+    private void txtMaestroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMaestroKeyTyped
+        char a = evt.getKeyChar();
+        if ((txtMaestro.getText().length() >= 4) || !Character.isDigit(a)) {
+            evt.consume();
+        } else {
+            //txtMaestro.setText("");
+        }
+    }//GEN-LAST:event_txtMaestroKeyTyped
+
+    private void txtMateriaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMateriaKeyTyped
+        char a = evt.getKeyChar();
+        if ((txtMateria.getText().length() >= 1) || !Character.isDigit(a)) {
+            evt.consume();
+        } else {
+            //txtMateria.setText("");
+        }
+    }//GEN-LAST:event_txtMateriaKeyTyped
+
+    private void txtAlumnoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAlumnoKeyTyped
+        char a = evt.getKeyChar();
+        if ((txtAlumno.getText().length() >= 11) || !Character.isDigit(a)) {
+            evt.consume();
+        } else {
+            //txtAlumno.setText("");
+        }
+    }//GEN-LAST:event_txtAlumnoKeyTyped
+
+    public boolean validar() {
+        return txtMaestro.getText().length() == 4 && !txtMateria.getText().isEmpty() && txtAlumno.getText().length() == 11
+                && !cmbCalificacion.getSelectedItem().equals("0");
+            
+             
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEnviar;
+    private javax.swing.JComboBox<String> cmbCalificacion;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel lblAlumno;
     private javax.swing.JLabel lblCalificacion;
     private javax.swing.JLabel lblEncabezado;
+    private javax.swing.JLabel lblError;
     private javax.swing.JLabel lblFondo;
     private javax.swing.JLabel lblMaestro;
     private javax.swing.JLabel lblMateria;
     private javax.swing.JTextField txtAlumno;
-    private javax.swing.JTextField txtCalificacion;
     private javax.swing.JTextField txtMaestro;
     private javax.swing.JTextField txtMateria;
     // End of variables declaration//GEN-END:variables
@@ -137,6 +198,6 @@ public class MainForm extends javax.swing.JFrame implements GUIObserver {
     @Override
     public void update(String contenido) {
         this.btnEnviar.setEnabled(true);
-        JOptionPane.showMessageDialog(this,"Enviado");
+        JOptionPane.showMessageDialog(this, "Enviado");
     }
 }
