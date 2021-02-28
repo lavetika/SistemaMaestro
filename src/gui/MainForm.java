@@ -114,12 +114,10 @@ public class MainForm extends javax.swing.JFrame implements GUIObserver {
                "\"materia\": \""+txtMateria.getText()+"\","+
                "\"alumno\": \""+txtAlumno.getText()+"\","
                + " \"calificacion\": \""+txtCalificacion.getText()+"\" }";
-       this.btnEnviar.setEnabled(false);
        //this.datosJson.toJson((Object)datosString);
        //aquí se le manda a enviar
        this.clienteServer.enviar(json);
     }//GEN-LAST:event_btnEnviarActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnEnviar;

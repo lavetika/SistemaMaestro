@@ -20,5 +20,4 @@ public class SistemaMaestro {
         MainForm form=new MainForm();
         form.setVisible(true);
     }
-    
 }
